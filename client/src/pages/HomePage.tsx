@@ -1,7 +1,8 @@
-import AddUrl from "@/components/ui/AddUrl";
+import AddUrl from "@/components/AddUrl";
 import { Button } from "@/components/ui/button";
 import UrlList from "@/components/UrlList";
 import { useAuth } from "@/hooks/useAuth";
+import { UrlProvider } from "@/services/providers/urlProvider";
 
 export default function HomePage() {
   const { user, logout } = useAuth();
@@ -12,10 +13,10 @@ export default function HomePage() {
         <h1>Hi {user?.firstName}</h1>
         <Button onClick={() => logout()}>Logout</Button>
       </div>
-      <div className="">
+      <UrlProvider>
         <AddUrl />
-      </div>
-      <UrlList userId={user?._id ?? ""} />
+        <UrlList />
+      </UrlProvider>
     </div>
   );
 }

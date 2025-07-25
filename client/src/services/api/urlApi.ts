@@ -1,10 +1,9 @@
 import { api } from "@/axios/api";
-import type { Url } from "@/types/Url";
 
 export const urlApi = () => {
-  const addUrlApi = async (url: Url) => {
+  const addUrlApi = async (originalUrl: string) => {
     try {
-      const res = await api.post("/url", url);
+      const res = await api.post("/url", { originalUrl });
       if (res && res.data) return res.data;
     } catch (error) {
       console.log("Erro on  add url api", error);
@@ -20,9 +19,9 @@ export const urlApi = () => {
     }
   };
 
-  const deleteUrlApi = async (urlId: string) => {
+  const deleteUrlApi = async (_id: string) => {
     try {
-      const res = await api.get(`/url/${urlId}`);
+      const res = await api.delete(`/url/${_id}`);
       if (res && res.data) return res.data;
     } catch (error) {
       console.log("Erro on delete url api", error);

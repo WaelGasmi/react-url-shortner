@@ -1,24 +1,9 @@
 import { useUrl } from "@/hooks/useUrl";
-import type { Url } from "@/types/Url";
-import { useEffect, useState } from "react";
 import UrlItem from "./UrlItem";
 
-type UrlListProps = {
-  userId: string;
-};
+export default function UrlList() {
+  const { urls } = useUrl();
 
-export default function UrlList({ userId }: UrlListProps) {
-  const [urls, setUrls] = useState<Url[]>([]);
-  const { getUrls } = useUrl();
-
-  useEffect(() => {
-    const fetchUrls = async () => {
-      const fetchedUrls = await getUrls(userId);
-      setUrls(fetchedUrls ?? []);
-    };
-
-    fetchUrls();
-  }, []);
   return (
     <div>
       {urls.length > 0 ? (
