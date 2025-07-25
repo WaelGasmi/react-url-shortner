@@ -25,7 +25,7 @@ export const getUrlsByUserId = async (req: Request, res: Response) => {
     if (urls.length === 0)
       return res.status(404).json({ message: "no urls found" });
 
-    return res.status(200).json(urls);
+    return res.status(200).json({ message: "success", urls });
   } catch (error) {
     console.error("Error in getUrlsByUserId:", error);
     return res.status(500).json({ message: "fetching urls for user failed" });
@@ -48,9 +48,7 @@ export const addUrl = async (req: RequestWithUser, res: Response) => {
 
     await newUrl.save();
 
-    return res
-      .status(200)
-      .json({ message: "url added succefully", url: newUrl });
+    return res.status(200).json({ message: "sucess", url: newUrl });
   } catch (error) {
     console.error("Error in addUrl:", error);
 
@@ -77,7 +75,7 @@ export const deleteUrl = async (req: RequestWithUser, res: Response) => {
 
     await Url.deleteOne({ _id: urlId });
 
-    return res.status(200).json({ message: "url deleted succefully" });
+    return res.status(200).json({ message: "sucess" });
   } catch (error) {
     return res.status(500).json({ message: "adding url failed" });
   }
