@@ -56,7 +56,7 @@ export default function LoginPage({
           <CardContent>
             <form onSubmit={handleSubmit(onLogin)}>
               <div className="grid gap-6">
-                <div className="flex flex-col gap-4">
+                {/* <div className="flex flex-col gap-4">
                   <Button variant="outline" className="w-full">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path
@@ -80,7 +80,7 @@ export default function LoginPage({
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
                     Or continue with
                   </span>
-                </div>
+                </div> */}
                 <div className="grid gap-6">
                   <div className="grid gap-3">
                     <Label htmlFor="email">Email</Label>
