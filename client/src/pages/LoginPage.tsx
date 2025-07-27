@@ -35,8 +35,7 @@ export default function LoginPage({
 
   const onLogin = async (data: z.infer<typeof userLoginSchema>) => {
     const success = await login(data);
-    console.log("login success:", success);
-
+ 
     if (success) navigate("/");
   };
 

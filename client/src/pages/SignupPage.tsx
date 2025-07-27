@@ -9,12 +9,31 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import z from "zod";
+import { userSigningupSchema } from "@/schemas/userSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignupPage({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const { user, signup } = useAuth();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(userSigningupSchema) });
+
+  if (user) return <Navigate to="/" replace />;
+
+  const onSignup = async (data: z.infer<typeof userSigningupSchema>) => {
+    const success = await signup(data);
+    if (success) navigate("/");
+  };
   return (
     <div className="w-full min-h-screen flex justify-center items-center px-4">
       <div
@@ -29,7 +48,7 @@ export default function SignupPage({
             </CardDescription> */}
           </CardHeader>
           <CardContent>
-            <form>
+            <form onSubmit={handleSubmit(onSignup)}>
               <div className="grid gap-6">
                 {/* <div className="flex flex-col gap-4">
                   <Button variant="outline" className="w-full">
@@ -58,12 +77,28 @@ export default function SignupPage({
                 </div> */}
                 <div className="grid gap-6">
                   <div className="grid gap-3">
+                    <Label htmlFor="email">First Name</Label>
+                    <Input
+                      id="firstName"
+                      type="text"
+                      {...register("firstName")}
+                    />
+                  </div>{" "}
+                  <div className="grid gap-3">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      type="text"
+                      {...register("lastName")}
+                    />
+                  </div>{" "}
+                  <div className="grid gap-3">
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="m@example.com"
-                      required
+                      {...register("email")}
                     />
                   </div>
                   <div className="grid gap-3">
@@ -76,7 +111,11 @@ export default function SignupPage({
                         Forgot your password?
                       </a>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      type="password"
+                      {...register("email")}
+                    />
                   </div>
                   <Button type="submit" className="w-full">
                     Sign up
