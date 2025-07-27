@@ -13,7 +13,10 @@ app.use(cookieParser());
 app.use(morgan(NODE_ENV === "development" ? "dev" : "combined"));
 app.use(
   cors({
-    origin: "https://react-url-shortner-two.vercel.app",
+    origin: [
+      "http://localhost:3000",
+      "https://react-url-shortner-two.vercel.app",
+    ],
     credentials: true,
   })
 );

@@ -49,9 +49,9 @@ export default function LoginPage({
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Welcome back</CardTitle>
-            <CardDescription>
+            {/* <CardDescription>
               Login with your Apple or Google account
-            </CardDescription>
+            </CardDescription> */}
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onLogin)}>
