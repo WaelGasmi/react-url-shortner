@@ -4,7 +4,7 @@ import { CookieOptions, Response } from "express";
 const cookieOptions: CookieOptions = {
   httpOnly: true,
   sameSite: "none",
-  secure: process.env.NODE_ENV === "production",
+  secure: true,
   maxAge: 24 * 60 * 60 * 1000,
 };
 
