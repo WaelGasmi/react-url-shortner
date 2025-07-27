@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(morgan(NODE_ENV === "development" ? "dev" : "combined"));
 app.use(
   cors({
-    origin: "https://react-url-shortner.onrender.com/",
+    origin: "https://react-url-shortner-two.vercel.app",
     credentials: true,
   })
 );
