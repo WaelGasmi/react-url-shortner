@@ -1,9 +1,9 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import { CookieOptions, Response } from "express";
- 
+
 const cookieOptions: CookieOptions = {
   httpOnly: true,
-  sameSite: "strict",
+  sameSite: "none",
   secure: process.env.NODE_ENV === "production",
   maxAge: 24 * 60 * 60 * 1000,
 };
