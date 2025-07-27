@@ -114,7 +114,7 @@ export default function SignupPage({
                     <Input
                       id="password"
                       type="password"
-                      {...register("email")}
+                      {...register("password")}
                     />
                   </div>
                   <Button type="submit" className="w-full">
