@@ -5,12 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDb = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = require("../config");
 const connectDb = async () => {
-    if (!config_1.MONGO_URI)
+    if (!process.env.MONGO_URI)
         throw new Error("Mongo uri undefined");
     try {
-        await mongoose_1.default.connect(config_1.MONGO_URI);
+        await mongoose_1.default.connect(process.env.MONGO_URI);
         mongoose_1.default.connection.on("open", () => {
             console.log("MongoDb connected");
         });
