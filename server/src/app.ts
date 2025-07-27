@@ -11,7 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan(NODE_ENV === "development" ? "dev" : "combined"));
-app.use(cors({ origin: true, credentials: true }));
+app.use(
+  cors({
+    origin: "https://react-url-shortner.onrender.com/",
+    credentials: true,
+  })
+);
 app.use(helmet());
 
 setupRoutes(app);
