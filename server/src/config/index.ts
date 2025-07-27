@@ -6,7 +6,7 @@ if (!process.env.JWT_EXPIRES) {
   throw new Error("Missing JWT_EXPIRES in environment");
 }
 
-export const PORT = process.env.PORT;
+export const PORT = process.env.PORT || 5000;
 export const MONGO_URI = process.env.MONGO_URI;
 export const MONGO_DB = process.env.MONGO_DB;
 export const NODE_ENV = process.env.NODE_ENV;
