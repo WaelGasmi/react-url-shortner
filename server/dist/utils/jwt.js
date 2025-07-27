@@ -7,7 +7,7 @@ exports.decodeToken = exports.generateTokenAndSetCookie = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const cookieOptions = {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "none",
     secure: process.env.NODE_ENV === "production",
     maxAge: 24 * 60 * 60 * 1000,
 };
