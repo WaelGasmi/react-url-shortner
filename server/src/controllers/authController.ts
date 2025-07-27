@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User";
-import { generateTokenAndSetCookie } from "../utils/jwt";
+import { cookieOptions, generateTokenAndSetCookie } from "../utils/jwt";
 import { IUser, RequestWithUser } from "../types/IUser";
 
 export const login = async (req: Request, res: Response) => {
@@ -65,7 +65,7 @@ export const signup = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  res.clearCookie("token");
+  res.clearCookie("token", cookieOptions);
   return res.status(200).json({ message: "success" });
 };
 
