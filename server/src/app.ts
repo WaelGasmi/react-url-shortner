@@ -13,7 +13,7 @@ app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "combined"));
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
+      "http://localhost:5173",
       "https://react-url-shortner-two.vercel.app",
     ],
     credentials: true,

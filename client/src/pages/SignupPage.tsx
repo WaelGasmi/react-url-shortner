@@ -1,20 +1,16 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import z from "zod";
-import { userSigningupSchema } from "@/schemas/userSchema";
+import { userSigningUpSchema } from "@/schemas/userSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function SignupPage({
   className,
@@ -26,11 +22,45 @@ export default function SignupPage({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(userSigningupSchema) });
+  } = useForm({ resolver: zodResolver(userSigningUpSchema) });
+
+  useEffect(() => {
+    if (errors.firstName) {
+      toast.error(errors.firstName.message, {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
+
+    if (errors.lastName) {
+      toast.error(errors.lastName.message, {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
+
+    if (errors.email) {
+      toast.error(errors.email.message, {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
+
+    if (errors.password) {
+      toast.error(errors.password.message, {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
+  }, [errors]);
 
   if (user) return <Navigate to="/" replace />;
 
-  const onSignup = async (data: z.infer<typeof userSigningupSchema>) => {
+  const onSignup = async (data: z.infer<typeof userSigningUpSchema>) => {
     const success = await signup(data);
     if (success) navigate("/");
   };
@@ -77,7 +107,7 @@ export default function SignupPage({
                 </div> */}
                 <div className="grid gap-6">
                   <div className="grid gap-3">
-                    <Label htmlFor="email">First Name</Label>
+                    <Label htmlFor="firstName">First Name</Label>
                     <Input
                       id="firstName"
                       type="text"
@@ -91,15 +121,10 @@ export default function SignupPage({
                       type="text"
                       {...register("lastName")}
                     />
-                  </div>{" "}
+                  </div>
                   <div className="grid gap-3">
                     <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      {...register("email")}
-                    />
+                    <Input id="email" type="email" {...register("email")} />
                   </div>
                   <div className="grid gap-3">
                     <div className="flex items-center">

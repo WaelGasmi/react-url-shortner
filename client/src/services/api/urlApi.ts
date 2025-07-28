@@ -15,7 +15,7 @@ export const urlApi = () => {
       const res = await api.get(`/url/${userId}`);
       if (res && res.data) return res.data;
     } catch (error) {
-      console.log("Erro on get url api", error);
+      console.log("Error on get url api", error);
     }
   };
 
@@ -24,7 +24,7 @@ export const urlApi = () => {
       const res = await api.delete(`/url/${_id}`);
       if (res && res.data) return res.data;
     } catch (error) {
-      console.log("Erro on delete url api", error);
+      console.log("Error on delete url api", error);
     }
   };
 

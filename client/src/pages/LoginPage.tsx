@@ -1,12 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -15,6 +9,8 @@ import { userLoginSchema } from "@/schemas/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type z from "zod";
 import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 export default function LoginPage({
   className,
@@ -29,14 +25,39 @@ export default function LoginPage({
   const { user, login } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (errors.email) {
+      toast.error(errors.email.message, {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
+    if (errors.password) {
+      toast.error(errors.password.message, {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
+  }, [errors.email, errors.password]);
+
   if (user) {
     return <Navigate to="/" replace />;
   }
 
   const onLogin = async (data: z.infer<typeof userLoginSchema>) => {
     const success = await login(data);
- 
+
     if (success) navigate("/");
+
+    if (!success) {
+      toast.error("Invalid Credentials", {
+        duration: 2000,
+        position: "top-center",
+        richColors: true,
+      });
+    }
   };
 
   return (
@@ -83,13 +104,7 @@ export default function LoginPage({
                 <div className="grid gap-6">
                   <div className="grid gap-3">
                     <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      {...register("email")}
-                    />
-                    {errors.email && <p>{errors.email.message}</p>}
+                    <Input id="email" type="text" {...register("email")} />
                   </div>
                   <div className="grid gap-3">
                     <div className="flex items-center">
@@ -106,7 +121,6 @@ export default function LoginPage({
                       type="password"
                       {...register("password")}
                     />
-                    {errors.password && <p>{errors.password.message}</p>}
                   </div>
                   <Button type="submit" className="w-full cursor-pointer">
                     Login

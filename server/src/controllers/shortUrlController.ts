@@ -10,7 +10,6 @@ export const getShortUrl = async (req: Request, res: Response) => {
 
   try {
     const url = await Url.findOne({ shortUrl: id });
-
     if (!url) {
       return res.status(404).json({ error: "Short URL not found" });
     }

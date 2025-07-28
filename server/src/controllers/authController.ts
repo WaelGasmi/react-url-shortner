@@ -1,24 +1,28 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import { cookieOptions, generateTokenAndSetCookie } from "../utils/jwt";
-import { IUser, RequestWithUser } from "../types/IUser";
+import { RequestWithUser } from "../types/IUser";
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password)
-    return res.status(404).json({ message: "All fieldss are required" });
+    return res.status(404).json({ message: "All fields are required" });
 
   try {
     const user = await User.findOne({ email });
-
-    if (!user) return res.status(404).json({ message: "user not found" });
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
 
     const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(404).json({ message: "Password wrong" });
+    }
 
-    if (!isMatch) return res.status(404).json({ message: "Password wrong" });
-
-    if (user._id) generateTokenAndSetCookie(res, user._id.toString());
+    if (user._id) {
+      generateTokenAndSetCookie(res, user._id.toString());
+    }
 
     return res.status(200).json({
       message: "success",
@@ -37,7 +41,7 @@ export const login = async (req: Request, res: Response) => {
 export const signup = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body;
   if (!firstName || !lastName || !email || !password)
-    return res.status(404).json({ message: "All fieldss are required" });
+    return res.status(404).json({ message: "All fields are required" });
 
   try {
     const ExistUser = await User.findOne({ email });

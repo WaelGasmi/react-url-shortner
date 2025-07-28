@@ -2,7 +2,7 @@ import { Express, Request, Response } from "express";
 import AuthRouter from "./authRoutes";
 import UrlRouter from "./urlRoutes";
 import ShortUrlRouter from "./shortUrlRoutes";
-import { NotFoundMiddleware } from "../middleware/NotFounfMiddleware";
+import { NotFoundMiddleware } from "../middleware/NotFoundMiddleware";
 
 export const setupRoutes = (app: Express) => {
   app.use("/auth", AuthRouter);
